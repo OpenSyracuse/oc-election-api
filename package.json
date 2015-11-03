@@ -1,0 +1,14 @@
+{
+  "name": "oc-election-api",
+  "version": "0.0.1",
+  "description": "A simple API for polling locations in Onondaga County",
+  "main": "index.js",
+  "dependencies": {
+    "request": "latest",
+    "express": "latest",
+    "body-parser": "latest",
+    "cheerio": "latest"
+  },
+  "author": "Mark Headd <mheadd@gmail.com> (http://civic.io/)",
+  "license": "ISC"
+}
