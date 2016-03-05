@@ -8,12 +8,18 @@ Much of the information provided by the existing County web application can also
 
 ## Example usage
 
+Base URL
+
+```
+http://apis.opensyracuse.org/elections/
+```
+
 Request
 
 ```
 curl -s -X POST -H 'Content-type: application/json' \
 -H 'Accept: application/json' \
--d '{"house_num": 4738, "street_name": "Lawsher Drive", "zip": 13215}' \
+-d '{"house_num": 1500, "street_name": "South Geddes Street", "zip": 13207}' \
 http://apis.opensyracuse.org/elections/ \
 | jq .
 ```
@@ -24,17 +30,18 @@ Response
 {
   "otherDistrict4": null,
   "otherDistrict3": null,
-  "otherDistrict2": "11th County Legislative District",
-  "otherDistrict1": null,
+  "otherDistrict2": "16th County Legislative District",
+  "otherDistrict1": "3rd City Council District",
   "assembly": "128th Assembly District",
-  "senate": "50th Senatorial District",
-  "name": "ST MICHAEL & ST PETER CHURCH",
-  "fullAddress": "(BASEMENT) 4791 W SENECA TPKE SYRACUSE NY 13215",
+  "senate": "53rd Senatorial District",
+  "name": "ELMWOOD SCHOOL BLDG (GYM)",
+  "fullAddress": "1728 SOUTH AVE SYRACUSE NY 13207 ",
   "disabled": "This Polling Place is Accessible to the disabled",
-  "town": "Onondaga",
+  "town": "Syracuse",
   "ward": "000",
-  "district": "003",
+  "district": "001",
   "school": null,
   "congress": "24th Congressional District"
 }
+
 ```
