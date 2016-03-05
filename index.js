@@ -16,9 +16,6 @@ var URL = 'http://vic.ntsdata.com/onondagaboe/pollingplacelookup.aspx';
 // Address parts for polling location lookup.
 var house_num, street_name, apartment, zip;
 
-// Serve static web assets.
-app.use(express.static(__dirname + '/public'));
-
 // Route for polling location lookup.
 app.post('/', function(req, res) {
 	async.waterfall([ 
