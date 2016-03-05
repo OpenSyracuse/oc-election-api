@@ -6,3 +6,35 @@ I built this very simple API in the hopes that it would encourage people to thin
 
 Much of the information provided by the existing County web application can also be obtained through the [Google Civic Information API](https://developers.google.com/civic-information/?hl=en). However, a polling location API specific to Onondaga County can provide more detailed, more accurate, and more recently updated information for voters. It can also act as an invitation to local technologists and software developers to build new ways to explore this important data and help ensure more people find their way to the polls on Election Day.
 
+## Example usage
+
+Request
+
+```
+curl -s -X POST -H 'Content-type: application/json' \
+-H 'Accept: application/json' \
+-d '{"house_num": 4738, "street_name": "Lawsher Drive", "zip": 13215}' \
+http://apis.opensyracuse.org/elections/ \
+| jq .
+```
+
+Response 
+
+```json
+{
+  "otherDistrict4": null,
+  "otherDistrict3": null,
+  "otherDistrict2": "11th County Legislative District",
+  "otherDistrict1": null,
+  "assembly": "128th Assembly District",
+  "senate": "50th Senatorial District",
+  "name": "ST MICHAEL & ST PETER CHURCH",
+  "fullAddress": "(BASEMENT) 4791 W SENECA TPKE SYRACUSE NY 13215",
+  "disabled": "This Polling Place is Accessible to the disabled",
+  "town": "Onondaga",
+  "ward": "000",
+  "district": "003",
+  "school": null,
+  "congress": "24th Congressional District"
+}
+```
