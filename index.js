@@ -5,16 +5,24 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var utilities = require('./utils/parser'); 
 
-// Start express app.
+// Local port to listen on.
+var port = process.argv[2] || 4000;
+
+// Set up Express app.
 var app = express();
 app.use(bodyParser.json());
-app.listen(4000);
+app.listen(port)
 
 // URL to County polling location website.
 var URL = 'http://vic.ntsdata.com/onondagaboe/pollingplacelookup.aspx';
 
 // Address parts for polling location lookup.
 var house_num, street_name, apartment, zip;
+
+// Default route for GETs
+app.get('/', function(req, res) {
+	res.status(404).json({ error: 'GET method not allowed. See API docs.' });
+});
 
 // Route for polling location lookup.
 app.post('/', function(req, res) {
@@ -29,7 +37,7 @@ app.post('/', function(req, res) {
 				res.json(pollingLocation);
 			}
 			else {
-				var error_message = error.message.length >0 ? error.message  : "Unable to retrieve polling location information.";
+				var error_message = error.message.length > 0 ? error.message  : "Unable to retrieve polling location information.";
 				var error_code = error.code > 0 ? error.code : 500;
 				res.status(error_code).json({error: error_message});
 			}
