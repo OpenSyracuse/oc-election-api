@@ -9,7 +9,7 @@ You can find a Dockerfile in the ```docker``` directory. Fisrt, build the image:
 Run it:
 
 ```
-~$ docker run -p 49160:4000 -d {username}/oc-elections-api
+~$ docker run -p 49160:4000 -d {username}/oc-election-api
 ```
 
 You can can now access the container at ```http://{docker-ip}:49160```
