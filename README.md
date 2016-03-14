@@ -14,7 +14,13 @@ Base URL
 http://apis.opensyracuse.org/elections/
 ```
 
-Request
+Request (GET & POST)
+
+```
+http://apis.opensyracuse.org/elections/?house_num=1500&street_name=South%20Geddes%20Street&zip=13207
+```
+
+Note: JSONP is supported by using a ```callback``` parameter with GET requests.
 
 ```
 curl -s -X POST -H 'Content-type: application/json' \

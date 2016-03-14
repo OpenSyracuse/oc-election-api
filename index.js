@@ -21,35 +21,55 @@ var house_num, street_name, apartment, zip;
 
 // Default route for GETs
 app.get('/', function(req, res) {
-	res.status(404).json({ error: 'GET method not allowed. See API docs.' });
+	if(!req.query.house_num || !req.query.street_name || !req.query.zip) {
+		res.status(403).json({message: 'Invalid request. Expected house_num, street_name and zip parameters.'});
+	}
+	else {
+		processRequest(req, res);
+	}
 });
 
 // Route for polling location lookup.
 app.post('/', function(req, res) {
-	async.waterfall([ 
-		async.apply(getFormData, req.body), 
-		getPollingInfo 
-		],
-		// Process response and send to user.
-		function (error, body) {
-			if(!error) {
-				var pollingLocation = utilities.getLocationInfo(body);
-				res.json(pollingLocation);
-			}
-			else {
-				var error_message = error.message.length > 0 ? error.message  : "Unable to retrieve polling location information.";
-				var error_code = error.code > 0 ? error.code : 500;
-				res.status(error_code).json({error: error_message});
-			}
-	});
+	if(Object.keys(req.body).length === 0) {
+		res.status(403).json({message: 'You must send a body with request.'});
+	}
+	else {
+		processRequest(req, res);
+	}
 });
 
+function processRequest(req, res) {
+var address = req.method == 'POST' ? req.body : req.query;
+async.waterfall([ 
+	async.apply(getFormData, address), 
+	getPollingInfo 
+	],
+	// Process response and send to user.
+	function (error, address) {
+		if(!error) {
+			var pollingLocation = utilities.getLocationInfo(address);
+			if(req.query.callback) {
+				res.jsonp(pollingLocation);
+			}
+			else {
+				res.json(pollingLocation);
+			}
+		}
+		else {
+			var error_message = error.message.length > 0 ? error.message  : "Unable to retrieve polling location information.";
+			var error_code = error.code > 0 ? error.code : 500;
+			res.status(error_code).json({error: error_message});
+		}
+	});
+}
+
 // Get the viewstate & related bits for polling place lookup.
-function getFormData(body, callback) {
-	validateAddressParts(body);
+function getFormData(address, callback) {
+	validateAddressParts(address);
 	if (house_num && street_name && zip) {
-		request(URL, function (error, response, body) {
-			callback(error, body);
+		request(URL, function (error, response, address) {
+			callback(error, address);
 		});
 	}
 	else {
@@ -58,9 +78,9 @@ function getFormData(body, callback) {
 }
 
 // Assemble form data to be sent with subsequent request.
-function getPollingInfo(body, callback) {
+function getPollingInfo(address, callback) {
 	
-	var viewStateData = utilities.getViewState(body);
+	var viewStateData = utilities.getViewState(address);
 	var formData = {
 		__VIEWSTATE: viewStateData.viewState,
 		__VIEWSTATEGENERATOR: viewStateData.viewStateGenerator,
@@ -71,15 +91,15 @@ function getPollingInfo(body, callback) {
 		capartment: apartment,
 		cmdlookup: 'Lookup'
 	};
-	request.post({url:URL, form: formData}, function (error, response, body) {
-		callback(error, body);
+	request.post({url:URL, form: formData}, function (error, response, address) {
+		callback(error, address);
 	});
 }
 
 // Validation of required address parts.
-function validateAddressParts(body) {
-	house_num = body.house_num;
-	street_name = body.street_name;
-	apartment = body.apartment;
-	zip = body.zip;
+function validateAddressParts(address) {
+	house_num = address.house_num;
+	street_name = address.street_name;
+	apartment = address.apartment;
+	zip = address.zip;
 }
