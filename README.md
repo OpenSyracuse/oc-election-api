@@ -10,19 +10,15 @@ Much of the information provided by the existing County web application can also
 
 Base URL
 
-```
+```curl
 http://apis.opensyracuse.org/elections/
 ```
 
-Request (GET & POST)
-
-```
-http://apis.opensyracuse.org/elections/?house_num=1500&street_name=South%20Geddes%20Street&zip=13207
+```curl
+~$ curl http://apis.opensyracuse.org/elections/?house_num=1500&street_name=South%20Geddes%20Street&zip=13207
 ```
 
-Note: JSONP is supported by using a ```callback``` parameter with GET requests.
-
-```
+```curl
 curl -s -X POST -H 'Content-type: application/json' \
 -H 'Accept: application/json' \
 -d '{"house_num": 1500, "street_name": "South Geddes Street", "zip": 13207}' \
@@ -51,3 +47,5 @@ Response
 }
 
 ```
+
+Note: JSONP is supported by using a ```callback``` parameter with GET requests.
