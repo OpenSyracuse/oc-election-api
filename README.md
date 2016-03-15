@@ -15,15 +15,14 @@ http://apis.opensyracuse.org/elections/
 ```
 
 ```curl
-~$ curl http://apis.opensyracuse.org/elections/?house_num=1500&street_name=South%20Geddes%20Street&zip=13207
+~$ curl -X GET http://apis.opensyracuse.org/elections/?house_num=1500&street_name=South%20Geddes%20Street&zip=13207
 ```
 
 ```curl
-curl -s -X POST -H 'Content-type: application/json' \
+curl -X POST -H 'Content-type: application/json' \
 -H 'Accept: application/json' \
 -d '{"house_num": 1500, "street_name": "South Geddes Street", "zip": 13207}' \
-http://apis.opensyracuse.org/elections/ \
-| jq .
+http://apis.opensyracuse.org/elections/
 ```
 
 Response 
