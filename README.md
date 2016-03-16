@@ -11,18 +11,18 @@ Much of the information provided by the existing County web application can also
 Base URL
 
 ```curl
-http://apis.opensyracuse.org/elections/
+https://apis.opensyracuse.org/elections/
 ```
 
 ```curl
-~$ curl -X GET http://apis.opensyracuse.org/elections/?house_num=1500&street_name=South%20Geddes%20Street&zip=13207
+~$ curl -X GET https://apis.opensyracuse.org/elections/?house_num=1500&street_name=South%20Geddes%20Street&zip=13207
 ```
 
 ```curl
 curl -X POST -H 'Content-type: application/json' \
 -H 'Accept: application/json' \
 -d '{"house_num": 1500, "street_name": "South Geddes Street", "zip": 13207}' \
-http://apis.opensyracuse.org/elections/
+https://apis.opensyracuse.org/elections/
 ```
 
 Response 
